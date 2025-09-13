@@ -1,0 +1,101 @@
+def spacing(string, space=20):
+    sp = space - len(string)
+    return " " * sp
+
+records = []
+
+def add_student():
+    name = input(f"Enter Student Name:{spacing('Enter Student Name:')}")
+    roll_no = input(f"Enter Roll No:{spacing('Enter Roll no:')}")
+    course = input(f"Enter Course:{spacing('Enter Course:')}")
+    marks = input(f"Enter Marks:{spacing('Enter Marks:')}")
+    
+    student = {
+        "name": name,
+        "roll_no": roll_no,
+        "course": course,
+        "marks": marks
+    }
+    
+    records.append(student)
+    print("Record Successfully Saved")
+
+def display_student():
+    if records:
+        for record in records:
+            print("______________________________")
+            print(f"Name:{spacing('Name:',10)}{record['name']}")
+            print(f"Roll No:{spacing('Roll No:',10)}{record['roll_no']}")
+            print(f"Course:{spacing('Course:',10)}{record['course']}")
+            print(f"Marks:{spacing('Marks:',10)}{record['marks']}")
+            print("______________________________")
+    else:
+        print("No Record Found!!!")
+
+def search_student():
+    if records:
+        roll_no = input(f"Enter Roll No:")
+        for index, record in enumerate(records):
+            if record["roll_no"] == roll_no:
+                return record, index
+        print("No Student Found")
+    else:
+        print("No Record Found!!!")
+    return None, None
+
+def update_student():
+    found, index = search_student()
+    if found:
+        marks = input("Enter Marks to update:")
+        records[index]["marks"] = marks
+        print("______________________________")
+        print(f"Name:{spacing('Name:',10)}{records[index]['name']}")
+        print(f"Roll No:{spacing('Roll No:',10)}{records[index]['roll_no']}")
+        print(f"Course:{spacing('Course:',10)}{records[index]['course']}")
+        print(f"Marks:{spacing('Marks:',10)}{records[index]['marks']}")
+        print("______________________________")
+
+def delete_student():
+    found, index = search_student()
+    if found:
+        records.pop(index)
+        print("Student Deleted")
+
+def sort_student():
+    if records:
+        records.sort(key=lambda x: int(x["marks"]))
+        print("Records Sorted Successfully")
+    else:
+        print("No Record Found!!!")
+
+menu = ["Add Student", "Display Students", "Search Student", "Update Student", "Delete Student", "Sort Student", "Exit"]
+
+while True:
+    print("______________________________")
+    for index, item in enumerate(menu):
+        print(f"{index + 1}. {item}")
+    print("______________________________")
+    choice = input("Enter Your Choice:")
+    if choice == '1':
+        add_student()
+    elif choice == '2':
+        display_student()
+    elif choice == '3':
+        found, idx = search_student()
+        if found:
+            print("______________________________")
+            print(f"Name:{spacing('Name:',10)}{found['name']}")
+            print(f"Roll No:{spacing('Roll No:',10)}{found['roll_no']}")
+            print(f"Course:{spacing('Course:',10)}{found['course']}")
+            print(f"Marks:{spacing('Marks:',10)}{found['marks']}")
+            print("______________________________")
+    elif choice == '4':
+        update_student()
+    elif choice == '5':
+        delete_student()
+    elif choice == '6':
+        sort_student()
+    elif choice == '7':
+        break
+    else:
+        print("Invalid Choice")
